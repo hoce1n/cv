@@ -1,84 +1,106 @@
-import { boolean, date, integer, jsonb, pgTable, serial, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  date,
+  integer,
+  jsonb,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  uniqueIndex,
+} from 'drizzle-orm/pg-core';
 
-export const personalInfo = pgTable("personal_info", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  phone: text("phone"),
-  email: text("email"),
-  links: jsonb("links").$type<string[]>().notNull().default([]),
-  photoUrl: text("photo_url"),
-  birthdate: date("birthdate"),
-  militaryStatus: text("military_status"),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+export const personalInfo = pgTable('personal_info', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  phone: text('phone'),
+  email: text('email'),
+  links: jsonb('links').$type<string[]>().notNull().default([]),
+  photoUrl: text('photo_url'),
+  birthdate: date('birthdate'),
+  militaryStatus: text('military_status'),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
-export const summaries = pgTable("summary", {
-  id: serial("id").primaryKey(),
-  locale: text("locale").notNull(),
-  text: text("text").notNull(),
-}, (table) => [uniqueIndex("summary_locale_idx").on(table.locale)]);
+export const summaries = pgTable(
+  'summary',
+  {
+    id: serial('id').primaryKey(),
+    locale: text('locale').notNull(),
+    text: text('text').notNull(),
+  },
+  (table) => [uniqueIndex('summary_locale_idx').on(table.locale)]
+);
 
-export const skills = pgTable("skills", {
-  id: serial("id").primaryKey(),
-  category: text("category").notNull(),
-  items: jsonb("items").$type<string[]>().notNull().default([]),
-  displayOrder: integer("display_order").notNull().default(0),
+export const skills = pgTable('skills', {
+  id: serial('id').primaryKey(),
+  category: text('category').notNull(),
+  items: jsonb('items').$type<string[]>().notNull().default([]),
+  displayOrder: integer('display_order').notNull().default(0),
 });
 
-export const experiences = pgTable("experience", {
-  id: serial("id").primaryKey(),
-  company: text("company").notNull(),
-  title: text("title").notNull(),
-  location: text("location"),
-  startDate: date("start_date"),
-  endDate: date("end_date"),
-  displayOrder: integer("display_order").notNull().default(0),
+export const experiences = pgTable('experience', {
+  id: serial('id').primaryKey(),
+  company: text('company').notNull(),
+  title: text('title').notNull(),
+  location: text('location'),
+  startDate: date('start_date'),
+  endDate: date('end_date'),
+  displayOrder: integer('display_order').notNull().default(0),
 });
 
-export const experienceBullets = pgTable("experience_bullets", {
-  id: serial("id").primaryKey(),
-  experienceId: integer("experience_id").notNull(),
-  locale: text("locale").notNull(),
-  text: text("text").notNull(),
-  displayOrder: integer("display_order").notNull().default(0),
+export const experienceBullets = pgTable('experience_bullets', {
+  id: serial('id').primaryKey(),
+  experienceId: integer('experience_id').notNull(),
+  locale: text('locale').notNull(),
+  text: text('text').notNull(),
+  displayOrder: integer('display_order').notNull().default(0),
 });
 
-export const projects = pgTable("projects", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  url: text("url"),
-  repoUrl: text("repo_url"),
-  displayOrder: integer("display_order").notNull().default(0),
+export const projects = pgTable('projects', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  url: text('url'),
+  repoUrl: text('repo_url'),
+  displayOrder: integer('display_order').notNull().default(0),
 });
 
-export const projectBullets = pgTable("project_bullets", {
-  id: serial("id").primaryKey(),
-  projectId: integer("project_id").notNull(),
-  locale: text("locale").notNull(),
-  text: text("text").notNull(),
-  displayOrder: integer("display_order").notNull().default(0),
+export const projectBullets = pgTable('project_bullets', {
+  id: serial('id').primaryKey(),
+  projectId: integer('project_id').notNull(),
+  locale: text('locale').notNull(),
+  text: text('text').notNull(),
+  displayOrder: integer('display_order').notNull().default(0),
 });
 
-export const education = pgTable("education", {
-  id: serial("id").primaryKey(),
-  institution: text("institution").notNull(),
-  degree: text("degree").notNull(),
-  field: text("field"),
-  location: text("location"),
-  startDate: date("start_date"),
-  endDate: date("end_date"),
-  displayOrder: integer("display_order").notNull().default(0),
+export const education = pgTable('education', {
+  id: serial('id').primaryKey(),
+  institution: text('institution').notNull(),
+  degree: text('degree').notNull(),
+  field: text('field'),
+  location: text('location'),
+  startDate: date('start_date'),
+  endDate: date('end_date'),
+  displayOrder: integer('display_order').notNull().default(0),
 });
 
-export const localeVisibilityConfig = pgTable("locale_visibility_config", {
-  id: serial("id").primaryKey(),
-  locale: text("locale").notNull(),
-  showPhoto: boolean("show_photo").notNull().default(false),
-  showBirthdate: boolean("show_birthdate").notNull().default(false),
-  showMilitaryStatus: boolean("show_military_status").notNull().default(false),
-}, (table) => [uniqueIndex("locale_visibility_locale_idx").on(table.locale)]);
+export const localeVisibilityConfig = pgTable(
+  'locale_visibility_config',
+  {
+    id: serial('id').primaryKey(),
+    locale: text('locale').notNull(),
+    showPhoto: boolean('show_photo').notNull().default(false),
+    showBirthdate: boolean('show_birthdate').notNull().default(false),
+    showMilitaryStatus: boolean('show_military_status')
+      .notNull()
+      .default(false),
+  },
+  (table) => [uniqueIndex('locale_visibility_locale_idx').on(table.locale)]
+);
 
-export type Locale = "fa" | "en";
+export type Locale = 'fa' | 'en';
 export type Link = string;
 export type PersonalInfo = typeof personalInfo.$inferSelect;
 export type Summary = typeof summaries.$inferSelect;
