@@ -33,7 +33,8 @@ export async function isAdmin() {
 export async function clearAdminSession() { (await cookies()).delete(COOKIE); }
 
 export function hashAdminPassword(password: string) {
-  return `${randomBytes(16).toString("hex")}:${scryptSync(password, randomBytes(16), 64).toString("hex")}`;
+  const salt = randomBytes(16).toString("hex");
+  return adminSaltedHash(password, salt);
 }
 
 export function adminSaltedHash(password: string, salt: string) { return `${salt}:${scryptSync(password, salt, 64).toString("hex")}`; }
