@@ -4,6 +4,8 @@ import {
   education,
   experienceBullets,
   experiences,
+  languageDetails,
+  languages,
   localeVisibilityConfig,
   personalInfo,
   projectBullets,
@@ -21,6 +23,8 @@ export async function getCvData(locale: Locale) {
     experienceRows,
     projectRows,
     educationRows,
+    languageRows,
+    languageDetailRows,
     visibility,
   ] = await Promise.all([
     db.select().from(personalInfo).limit(1),
@@ -38,6 +42,15 @@ export async function getCvData(locale: Locale) {
       .select()
       .from(education)
       .orderBy(asc(education.displayOrder), asc(education.id)),
+    db
+      .select()
+      .from(languages)
+      .orderBy(asc(languages.displayOrder), asc(languages.id)),
+    db
+      .select()
+      .from(languageDetails)
+      .where(eq(languageDetails.locale, locale))
+      .orderBy(asc(languageDetails.id)),
     db
       .select()
       .from(localeVisibilityConfig)
@@ -82,6 +95,12 @@ export async function getCvData(locale: Locale) {
       ),
     })),
     education: educationRows,
+    languages: languageRows.map((language) => ({
+      ...language,
+      details: languageDetailRows.filter(
+        (detail) => detail.languageId === language.id
+      ),
+    })),
     visibility: visibility[0] ?? null,
   };
 }
