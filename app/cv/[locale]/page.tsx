@@ -13,7 +13,11 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function CvPage({ params }: PageProps<"/cv/[locale]">) {
+export default async function CvPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
   const { locale } = await params;
   if (locale !== "fa" && locale !== "en") notFound();
   const data = await getCvData(locale);
