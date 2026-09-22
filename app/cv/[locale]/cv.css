@@ -1,0 +1,54 @@
+.cv-page {
+  min-height: 100vh;
+  background: #f5f5f3;
+  color: #171a18;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.55;
+}
+.cv-rtl { font-family: var(--font-vazirmatn), Tahoma, sans-serif; }
+.cv-document {
+  width: min(100% - 2rem, 850px);
+  margin: 0 auto;
+  padding: 3rem 3.5rem 4rem;
+  background: #fff;
+}
+.cv-toolbar {
+  width: min(100% - 2rem, 850px);
+  margin: 0 auto;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+.cv-toolbar button { border: 1px solid #b8beb9; background: #fff; padding: .55rem .9rem; border-radius: .35rem; cursor: pointer; font: inherit; }
+.cv-header { display: flex; justify-content: space-between; gap: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid #171a18; }
+.cv-header h1 { margin: 0 0 .5rem; font-size: 2rem; line-height: 1.2; }
+.cv-header p, .cv-entry p, .cv-list p { margin: .15rem 0; }
+.cv-header a, .cv-entry a { color: inherit; text-decoration: underline; overflow-wrap: anywhere; }
+.cv-photo { width: 112px; height: 144px; object-fit: cover; }
+.cv-page section { padding-top: 1.3rem; break-inside: auto; }
+.cv-page section h2 { margin: 0 0 .65rem; padding-bottom: .3rem; border-bottom: 1px solid #b8beb9; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .04em; break-after: avoid; }
+.cv-rtl section h2 { letter-spacing: 0; }
+.cv-list, .cv-entry { break-inside: avoid; }
+.cv-list h3, .cv-entry h3 { margin: .75rem 0 .1rem; font-size: 1rem; }
+.cv-entry-heading { display: flex; justify-content: space-between; gap: 1rem; }
+.cv-entry-heading p { text-align: end; }
+.cv-page ul { margin: .35rem 0 0; padding-inline-start: 1.35rem; }
+.cv-page li { margin: .2rem 0; }
+
+@media (max-width: 640px) {
+  .cv-document { width: 100%; padding: 2rem 1.25rem 3rem; }
+  .cv-toolbar { width: 100%; padding-inline: 1.25rem; }
+  .cv-entry-heading { display: block; }
+  .cv-entry-heading p { text-align: start; }
+}
+
+@media print {
+  @page { size: A4; margin: 16mm 14mm; }
+  .cv-page { background: #fff; min-height: auto; }
+  .cv-toolbar { display: none; }
+  .cv-document { width: 100%; margin: 0; padding: 0; }
+  .cv-header { padding-top: 0; }
+  .cv-page section { break-inside: auto; }
+  .cv-entry, .cv-list > div { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
